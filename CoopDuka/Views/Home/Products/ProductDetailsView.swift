@@ -13,7 +13,6 @@ struct ProductDetailView: View {
     @ObservedObject var viewModel: ProductsViewModel
 
     @State private var isDescriptionExpanded = false
-    @State private var showCartBanner = false
     @Environment(\.dismiss) private var dismiss
 
     private let relatedColumns = [GridItem(.flexible()), GridItem(.flexible())]
@@ -36,8 +35,7 @@ struct ProductDetailView: View {
     private var relatedPosts: [Product] { viewModel.filteredProducts.filter { $0.id != product.id }.prefix(6).map { $0 } }
 
     var body: some View {
-        ZStack(alignment: .top) {
-            ScrollView(showsIndicators: false) {
+        ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
 
                     // Product Image
@@ -84,9 +82,7 @@ struct ProductDetailView: View {
 
                     // Add To Cart
                     Button(action: {
-                        showCartBanner = true //remove
                         viewModel.addProductToCart(product: product)
-                        dismiss()
                     }) {
                         Text("Add To Cart")
                             .font(.system(size: 17, weight: .semibold))
@@ -117,15 +113,6 @@ struct ProductDetailView: View {
                 }
             }
             .background(Color("BackgroundColor"))
-
-            // Cart success toast..//move to home view
-            if showCartBanner {
-                CartSuccessBanner { showCartBanner = false }
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                    .zIndex(1)
-            }
-        }
-        .animation(.easeInOut(duration: 0.3), value: showCartBanner)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(product.title.capitalized)
         .toolbar {
@@ -135,6 +122,26 @@ struct ProductDetailView: View {
                         .foregroundColor(.primary)
                 }
             }
+        }
+        .overlay {
+            if viewModel.isAddingToCart {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                ProgressView("Please wait...")
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(10)
+            }
+        }
+        .onChange(of: viewModel.dismissDetails) {  dissmissDetails in
+            if dissmissDetails {
+                dismiss()
+                viewModel.dismissDetails = false
+            }
+            
+        
+            
         }
     }
     

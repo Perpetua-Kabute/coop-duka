@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
- struct ProductCard: View {
+
+struct ProductCard: View {
     let product: Product
-    let isSelected: Bool = false // remove
+    let isSelected: Bool = false
 
     private var imageURL: URL? {
         URL(string: "https://picsum.photos/seed/\(product.id)/400/400")

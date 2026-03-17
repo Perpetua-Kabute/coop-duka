@@ -15,9 +15,11 @@ class ProductsViewModel: ObservableObject {
     @Published var showErrorDialog: Bool = false
     @Published var dialogMessage: String = ""
     @Published var selectedProduct: Product? = nil
-    
+    @Published var isAddingToCart: Bool = false
+
     @Published var showCartBanner: Bool = false
-    @Published var successMessage: Bool = false
+    @Published var successMessage: String = ""
+    @Published var dismissDetails: Bool = false
     
     var cancellables = Set<AnyCancellable>()
 
@@ -78,14 +80,14 @@ class ProductsViewModel: ObservableObject {
     }
     
     func addProductToCart(product: Product) {
-        isLoading = true
         print("Adding \(product.id) to cart")
+        isAddingToCart = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.cart.append(product)
-            self?.isLoading = false
-            
+            self?.dismissDetails = true
             self?.showCartBanner = true
-                    
+            self?.isAddingToCart = false
+            
             print("Added \(product.id) to cart")
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
