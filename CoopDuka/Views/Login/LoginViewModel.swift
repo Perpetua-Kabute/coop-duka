@@ -45,11 +45,11 @@ class LoginViewModel: ObservableObject {
     
     func simulateLogin(){
         self.isLoading = true
-        UserDefaults.standard.set(username, forKey: "userName")
+        UserDefaults.standard.set(username, forKey: "username")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.isLoading = false
-            self.hasLoggedIn = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.isLoading = false
+            self?.hasLoggedIn = true
         }
         
     }

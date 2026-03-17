@@ -124,7 +124,6 @@ struct LoginView: View {
                         Button(action: {
                             if viewModel.validate() {
                                 viewModel.simulateLogin()
-                                appState.hasLoggedIn = viewModel.hasLoggedIn
 
                             }
                         }) {
@@ -155,6 +154,10 @@ struct LoginView: View {
                     .background(Color.white)
                     .cornerRadius(10)
             }
+        }
+        .onChange(of: viewModel.hasLoggedIn) { loggedIn in
+            appState.hasLoggedIn = viewModel.hasLoggedIn
+
         }
     }
 

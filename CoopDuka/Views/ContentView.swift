@@ -10,14 +10,11 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
     var body: some View {
-        ZStack{
-            Color("BackgroundColor").ignoresSafeArea(edges: .all)
-            if appState.hasLoggedIn {
-                
-                NavigationStack{
-                    HomeView()
-                }
-            }else{
+        if appState.hasLoggedIn {
+            HomeView()
+        } else {
+            ZStack {
+                Color("BackgroundColor").ignoresSafeArea(edges: .all)
                 LoginView()
             }
         }

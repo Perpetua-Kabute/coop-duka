@@ -8,7 +8,11 @@
 import Foundation
 import Combine
 
-class AppState: ObservableObject{
+class AppState: ObservableObject {
     @Published var hasLoggedIn = false
 
+    func logout() {
+        hasLoggedIn = false
+        UserDefaults.standard.removeObject(forKey: "userName")
+    }
 }
