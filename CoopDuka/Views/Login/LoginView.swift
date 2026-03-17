@@ -22,11 +22,13 @@ struct LoginView: View {
                     // Header
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Already registered on the new platform?")
-                            .font(.system(size: 17, weight: .bold))
+                            .font(.custom("Muli", size: 17))
+                            .fontWeight(.bold)
                             .foregroundColor(.primary)
 
                         Text("Use your credentials to log in")
-                            .font(.system(size: 15))
+                            .font(.custom("Muli", size: 15))
+                            .fontWeight(.bold)
                             .foregroundColor(.secondary)
                     }
                     .padding(.top, 32)
@@ -34,12 +36,14 @@ struct LoginView: View {
                     // Username Field
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Username")
-                            .font(.system(size: 14))
+                            .font(.custom("Muli", size: 14))
+                            .fontWeight(.regular)
                             .foregroundColor(Color("TextFieldColor"))
 
                     
                         TextField("MB30123456", text: $viewModel.username)
-                            .font(.system(size: 16))
+                            .font(.custom("Muli", size: 16))
+                            .fontWeight(.regular)
                             .foregroundColor(Color("TextFieldColor"))
                             .keyboardType(.asciiCapable)
                             .autocapitalization(.none)
@@ -62,7 +66,8 @@ struct LoginView: View {
                         HStack {
                             Spacer()
                             Button("Forgot Username?") { }
-                                .font(.system(size: 14))
+                                .font(.custom("Muli", size: 14))
+                                .fontWeight(.bold)
                                 .foregroundColor(Color("CoopPrimaryGreen"))
                         }
                         .padding(.top, 4)
@@ -72,17 +77,20 @@ struct LoginView: View {
                     // Password Field
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Password")
-                            .font(.system(size: 14))
-                            .foregroundColor(.secondary)
+                            .font(.custom("Muli", size: 14))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextFieldColor"))
 
                         HStack {
                             if viewModel.isPasswordVisible {
                                 TextField("", text: $viewModel.password)
-                                    .font(.system(size: 16))
+                                    .font(.custom("Muli", size: 16))
+                                    .fontWeight(.regular)
                                     .foregroundColor(Color("TextFieldColor"))
                             } else {
                                 SecureField("", text: $viewModel.password)
-                                    .font(.system(size: 16))
+                                    .font(.custom("Muli", size: 16))
+                                    .fontWeight(.regular)
                                     .foregroundColor(Color("TextFieldColor"))
                                    
                             }
@@ -111,7 +119,8 @@ struct LoginView: View {
                         HStack {
                             Spacer()
                             Button("Forgot Password?") { }
-                                .font(.system(size: 14))
+                                .font(.custom("Muli", size: 14))
+                                .fontWeight(.bold)
                                 .foregroundColor(Color("CoopPrimaryGreen"))
                         }
                         .padding(.top, 4)
@@ -127,7 +136,8 @@ struct LoginView: View {
                         }
                     }) {
                         Text("Log In")
-                            .font(.system(size: 17, weight: .semibold))
+                            .font(.custom("Muli", size: 17))
+                            .fontWeight(.bold)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
@@ -193,12 +203,14 @@ struct LoginView: View {
                     
                     VStack(spacing: 6) {
                         Text("Welcome to a New Banking Experience")
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.custom("Muli", size: 18))
+                            .fontWeight(.bold)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                         
                         Text("Dream it. Achieve it.")
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.custom("Muli", size: 18))
+                            .fontWeight(.bold)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                     }

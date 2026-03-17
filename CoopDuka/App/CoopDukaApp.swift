@@ -15,6 +15,7 @@ struct CoopDukaApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(appState)
+                .environment(\.font, Font.custom("Muli", size: 16))
         }
     }
 }

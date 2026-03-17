@@ -11,13 +11,15 @@ struct CartSuccessBanner: View {
     var body: some View {
         HStack(spacing: 12) {
             Text("Item has been added to the cart successfully.")
-                .font(.system(size: 14))
+                .font(.custom("Muli", size: 14))
+                .fontWeight(.bold)
                 .foregroundColor(.white)
 
             Spacer()
 
             Button("OK", action: onDismiss)
-                .font(.system(size: 15, weight: .bold))
+                .font(.custom("Muli", size: 15))
+                .fontWeight(.bold)
                 .foregroundColor(.white)
         }
         .padding(.horizontal, 16)

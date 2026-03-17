@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProductDetailView: View {
     let product: Product
-//    let allProducts: [Product]
     @ObservedObject var viewModel: ProductsViewModel
 
     @State private var isDescriptionExpanded = false
@@ -39,39 +38,50 @@ struct ProductDetailView: View {
                 VStack(alignment: .leading, spacing: 0) {
 
                     // Product Image
-                    AsyncImage(url: imageURL) { phase in
-                        if let image = phase.image {
-                            image.resizable().scaledToFit()
-                        } else if phase.error != nil {
-                            Color.gray.opacity(0.15)
-                                .overlay(Image(systemName: "photo").foregroundColor(.gray))
-                        } else {
-                            Color.gray.opacity(0.1).overlay(ProgressView())
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color(.systemGray6))
+
+                        AsyncImage(url: imageURL) { phase in
+                            if let image = phase.image {
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(24)
+                            } else if phase.error != nil {
+                                Image(systemName: "photo")
+                                    .font(.system(size: 48))
+                                    .foregroundColor(.gray)
+                            } else {
+                                ProgressView()
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 280)
-                    .background(Color.gray.opacity(0.08))
-                    .cornerRadius(8)
                     .padding(16)
 
                     // Product Info
                     VStack(alignment: .leading, spacing: 8) {
                         Text(product.title.capitalized)
-                            .font(.system(size: 20, weight: .bold))
+                            .font(.custom("Muli", size: 18))
+                            .fontWeight(.bold)
 
                         HStack(alignment: .firstTextBaseline, spacing: 8) {
                             Text("\(priceAmount) KES")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(.custom("Muli", size: 18))
+                                .fontWeight(.bold)
                                 .foregroundColor(Color("DarkGreenText"))
 
                             Text("VAT Inclusive")
-                                .font(.system(size: 13))
                                 .foregroundColor(.secondary)
+                                .font(.custom("Muli", size: 13))
+                                .fontWeight(.bold)
                         }
 
                         Text(category)
-                            .font(.system(size: 15))
+                            .font(.custom("Muli", size: 15))
+                            .fontWeight(.semibold)
                             .foregroundColor(.primary)
 
                         ExpandableText(text: product.body, isExpanded: $isDescriptionExpanded)
@@ -85,7 +95,8 @@ struct ProductDetailView: View {
                         viewModel.addProductToCart(product: product)
                     }) {
                         Text("Add To Cart")
-                            .font(.system(size: 17, weight: .semibold))
+                            .font(.custom("Muli", size: 16))
+                            .fontWeight(.bold)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
@@ -98,7 +109,8 @@ struct ProductDetailView: View {
                     // Best Selling
                     if !relatedPosts.isEmpty {
                         Text("Best Selling")
-                            .font(.system(size: 20, weight: .bold))
+                            .font(.custom("Muli", size: 18))
+                            .fontWeight(.bold)
                             .padding(.horizontal, 16)
                             .padding(.bottom, 12)
 
@@ -115,13 +127,22 @@ struct ProductDetailView: View {
             .background(Color("BackgroundColor"))
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(product.title.capitalized)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { dismiss() }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.primary)
+                }
+            }
+            .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: { dismiss() }) {
                     Image(systemName: "xmark")
                         .foregroundColor(.primary)
                 }
             }
+            .sharedBackgroundVisibility(.hidden)
         }
         .overlay {
             if viewModel.isAddingToCart {
@@ -168,7 +189,8 @@ struct ProductDetailView: View {
                 if needsTruncation {
                     Button(action: { isExpanded.toggle() }) {
                         Text(isExpanded ? "...see less" : "...see more")
-                            .font(.system(size: 15))
+                            .font(.custom("Muli", size: 15))
+                            .fontWeight(.light)
                             .underline()
                             .foregroundColor(.primary)
                     }
@@ -178,5 +200,9 @@ struct ProductDetailView: View {
     }
 }
 
+
+#Preview {
+    ProductDetailView(product: Product(id: 3, userId: 4, title: "title", body: "Body"), viewModel: ProductsViewModel())
+}
 
 

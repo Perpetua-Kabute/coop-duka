@@ -32,8 +32,10 @@ struct HomeView: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
 
+                    
                     Text("Best Selling")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.custom("Muli", size: 18,))
+                        .fontWeight(.bold)
                         .padding(.horizontal, 16)
                         .padding(.bottom, 12)
 
@@ -69,18 +71,21 @@ struct HomeView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Image(systemName: "person.circle")
                         .font(.system(size: 22))
-                        .foregroundColor(.primary)
+                        .foregroundColor(Color("TextFieldColor"))
                 }
+                .sharedBackgroundVisibility(.hidden)
                 ToolbarItem(placement: .principal) {
                     Text("Hello \(userName)")
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.custom("Muli", size: 16,))
+                        .fontWeight(.semibold)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: appState.logout) {
                         Image(systemName: "rectangle.portrait.and.arrow.right")
-                            .foregroundColor(Color("CoopPrimaryGreen"))
+                            .foregroundColor(Color("TextFieldColor"))
                     }
                 }
+                .sharedBackgroundVisibility(.hidden)
             }
             .navigationDestination(for: Product.self) { product in
                 ProductDetailView(product: product, viewModel: viewModel)
@@ -89,7 +94,8 @@ struct HomeView: View {
         } detail: {
             Text("Select a product to view details")
                 .foregroundColor(.secondary)
-                .font(.system(size: 16))
+                .font(.custom("Muli", size: 16,))
+                .fontWeight(.semibold)
         }
     }
 }
@@ -103,6 +109,8 @@ private struct PromoBanner: View {
         HStack {
             Text(message)
                 .font(.system(size: 15, weight: .semibold))
+                .font(.custom("Muli", size: 15))
+                .fontWeight(.semibold)
                 .foregroundColor(.white)
             Spacer()
         }
@@ -123,7 +131,8 @@ private struct SearchBar: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.secondary)
             TextField("Search products", text: $text)
-                .font(.system(size: 15))
+                .font(.custom("Muli", size: 15))
+                .fontWeight(.regular)
             Spacer()
             Image(systemName: "slider.horizontal.3")
                 .foregroundColor(.secondary)

@@ -48,13 +48,16 @@ struct ProductCard: View {
             .frame(height: 160)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(product.title.capitalized)
-                    .font(.system(size: 14, weight: .bold))
+                Text(product.title)
+                    .font(.custom("Muli", size: 14))
+                    .fontWeight(.bold)
                     .lineLimit(2)
                     .foregroundColor(.primary)
+                    .frame(maxWidth: .infinity, minHeight: 36, alignment: .topLeading)
 
                 Text(formattedPrice)
-                    .font(.system(size: 13))
+                    .font(.custom("Muli", size: 13))
+                    .fontWeight(.regular)
                     .foregroundColor(.primary)
             }
             .padding(.horizontal, 8)
