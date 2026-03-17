@@ -131,7 +131,7 @@ struct ProductDetailView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: { dismiss() }) {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: "arrow.left")
                         .foregroundColor(.primary)
                 }
             }
