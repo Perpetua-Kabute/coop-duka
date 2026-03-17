@@ -20,6 +20,8 @@ class ProductsViewModel: ObservableObject {
     @Published var showCartBanner: Bool = false
     @Published var successMessage: String = ""
     @Published var dismissDetails: Bool = false
+    @Published var hasPromotion: Bool = true
+    @Published var promotionMessage: String = "15% off if you pay via MCoopCash!"
     
     var cancellables = Set<AnyCancellable>()
 

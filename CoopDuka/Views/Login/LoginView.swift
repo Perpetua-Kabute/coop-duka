@@ -15,85 +15,36 @@ struct LoginView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    ImageSection(geometry: geometry)
-                    VStack(alignment: .leading, spacing: 0) {
+            VStack(spacing: 0) {
+                ImageSection(geometry: geometry)
+                VStack(alignment: .leading, spacing: 0) {
 
-                        // Header
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Already registered on the new platform?")
-                                .font(.system(size: 17, weight: .bold))
-                                .foregroundColor(.primary)
+                    // Header
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Already registered on the new platform?")
+                            .font(.system(size: 17, weight: .bold))
+                            .foregroundColor(.primary)
 
-                            Text("Use your credentials to log in")
-                                .font(.system(size: 15))
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.top, 32)
+                        Text("Use your credentials to log in")
+                            .font(.system(size: 15))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.top, 32)
 
-                        // Username Field
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Username")
-                                .font(.system(size: 14))
-                                .foregroundColor(Color("TextFieldColor"))
+                    // Username Field
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Username")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("TextFieldColor"))
 
-                        
-                            TextField("MB30123456", text: $viewModel.username)
-                                .font(.system(size: 16))
-                                .foregroundColor(Color("TextFieldColor"))
-                                .keyboardType(.asciiCapable)
-                                .autocapitalization(.none)
-                                .autocorrectionDisabled()
-                                .padding(.vertical, 8)
-                                .overlay(
-                                    Rectangle()
-                                        .frame(height: 1)
-                                        .foregroundColor(Color("TextFieldColor")),
-                                    alignment: .bottom
-                                )
-
-
-                            if let error = viewModel.usernameError {
-                                Text(error)
-                                    .font(.caption)
-                                    .foregroundColor(.red)
-                            }
-
-                            HStack {
-                                Spacer()
-                                Button("Forgot Username?") { }
-                                    .font(.system(size: 14))
-                                    .foregroundColor(Color("CoopPrimaryGreen"))
-                            }
-                            .padding(.top, 4)
-                        }
-                        .padding(.top, 24)
-
-                        // Password Field
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Password")
-                                .font(.system(size: 14))
-                                .foregroundColor(.secondary)
-
-                            HStack {
-                                if viewModel.isPasswordVisible {
-                                    TextField("", text: $viewModel.password)
-                                        .font(.system(size: 16))
-                                        .foregroundColor(Color("TextFieldColor"))
-                                } else {
-                                    SecureField("", text: $viewModel.password)
-                                        .font(.system(size: 16))
-                                        .foregroundColor(Color("TextFieldColor"))
-                                       
-                                }
-
-                                Button(action: { viewModel.isPasswordVisible.toggle() }) {
-                                    Image(systemName: viewModel.isPasswordVisible ? "eye.slash" : "eye")
-                                        .foregroundColor(Color("CoopPrimaryGreen"))
-                                }
-                            }
-                            .padding(.bottom, 8)
+                    
+                        TextField("MB30123456", text: $viewModel.username)
+                            .font(.system(size: 16))
+                            .foregroundColor(Color("TextFieldColor"))
+                            .keyboardType(.asciiCapable)
+                            .autocapitalization(.none)
+                            .autocorrectionDisabled()
+                            .padding(.vertical, 8)
                             .overlay(
                                 Rectangle()
                                     .frame(height: 1)
@@ -102,45 +53,95 @@ struct LoginView: View {
                             )
 
 
+                        if let error = viewModel.usernameError {
+                            Text(error)
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
 
-                            if let error = viewModel.passwordError {
-                                Text(error)
-                                    .font(.caption)
-                                    .foregroundColor(.red)
+                        HStack {
+                            Spacer()
+                            Button("Forgot Username?") { }
+                                .font(.system(size: 14))
+                                .foregroundColor(Color("CoopPrimaryGreen"))
+                        }
+                        .padding(.top, 4)
+                    }
+                    .padding(.top, 24)
+
+                    // Password Field
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Password")
+                            .font(.system(size: 14))
+                            .foregroundColor(.secondary)
+
+                        HStack {
+                            if viewModel.isPasswordVisible {
+                                TextField("", text: $viewModel.password)
+                                    .font(.system(size: 16))
+                                    .foregroundColor(Color("TextFieldColor"))
+                            } else {
+                                SecureField("", text: $viewModel.password)
+                                    .font(.system(size: 16))
+                                    .foregroundColor(Color("TextFieldColor"))
+                                   
                             }
 
-                            HStack {
-                                Spacer()
-                                Button("Forgot Password?") { }
-                                    .font(.system(size: 14))
+                            Button(action: { viewModel.isPasswordVisible.toggle() }) {
+                                Image(systemName: viewModel.isPasswordVisible ? "eye.slash" : "eye")
                                     .foregroundColor(Color("CoopPrimaryGreen"))
                             }
-                            .padding(.top, 4)
                         }
-                        .padding(.top, 20)
+                        .padding(.bottom, 8)
+                        .overlay(
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(Color("TextFieldColor")),
+                            alignment: .bottom
+                        )
 
-                        Spacer()
-                        // Login Button 
-                        Button(action: {
-                            if viewModel.validate() {
-                                viewModel.simulateLogin()
 
-                            }
-                        }) {
-                            Text("Log In")
-                                .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 16)
-                                .background(Color("CoopPrimaryGreen"))
-                                .cornerRadius(10)
+
+                        if let error = viewModel.passwordError {
+                            Text(error)
+                                .font(.caption)
+                                .foregroundColor(.red)
                         }
-                        
+
+                        HStack {
+                            Spacer()
+                            Button("Forgot Password?") { }
+                                .font(.system(size: 14))
+                                .foregroundColor(Color("CoopPrimaryGreen"))
+                        }
+                        .padding(.top, 4)
                     }
-                    .padding(.horizontal, 24)
-                    .background(Color("BackgroundColor"))
+                    .padding(.top, 20)
+
+                    Spacer()
+                    // Login Button
+                    Button(action: {
+                        if viewModel.validate() {
+                            viewModel.simulateLogin()
+
+                        }
+                    }) {
+                        Text("Log In")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(Color("CoopPrimaryGreen"))
+                            .cornerRadius(10)
+                    }
+                    .padding(.bottom, 24)
+                    
                 }
+                .padding(.horizontal, 24)
+                .frame(maxHeight: .infinity)
+                .background(Color("BackgroundColor"))
             }
+            
             .ignoresSafeArea(edges: .top)
         }
         .ignoresSafeArea(edges: .top)

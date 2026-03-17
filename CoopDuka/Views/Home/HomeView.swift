@@ -24,7 +24,9 @@ struct HomeView: View {
         NavigationSplitView {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
-                    PromoBanner()
+                    if viewModel.hasPromotion {
+                        PromoBanner(message: viewModel.promotionMessage)
+                    }
 
                     SearchBar(text: $viewModel.searchText)
                         .padding(.horizontal, 16)
@@ -95,9 +97,11 @@ struct HomeView: View {
 // MARK: - Promo Banner
 
 private struct PromoBanner: View {
+    let message: String
+
     var body: some View {
         HStack {
-            Text("15% off if you pay via MCoopCash!")
+            Text(message)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(.white)
             Spacer()
