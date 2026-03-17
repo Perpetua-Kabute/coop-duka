@@ -120,7 +120,7 @@ struct LoginView: View {
                         .padding(.top, 20)
 
                         Spacer()
-                        // Login Button
+                        // Login Button 
                         Button(action: {
                             if viewModel.validate() {
                                 viewModel.simulateLogin()
@@ -171,7 +171,7 @@ struct LoginView: View {
             
             ZStack {
                 
-                Image("login_image")
+                Image("login_background")
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: heroHeight)

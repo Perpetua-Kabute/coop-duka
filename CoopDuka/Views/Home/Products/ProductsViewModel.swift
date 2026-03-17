@@ -79,14 +79,19 @@ class ProductsViewModel: ObservableObject {
     
     func addProductToCart(product: Product) {
         isLoading = true
+        print("Adding \(product.id) to cart")
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.cart.append(product)
             self?.isLoading = false
             
             self?.showCartBanner = true
                     
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            print("Added \(product.id) to cart")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                 self?.showCartBanner = false
+                print("banner for \(product.id) dismissed")
+
             }
             
             

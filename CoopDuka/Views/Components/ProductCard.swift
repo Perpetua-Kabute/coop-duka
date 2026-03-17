@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
-struct ProductCard: View {
+ struct ProductCard: View {
     let product: Product
+    let isSelected: Bool = false // remove
 
     private var imageURL: URL? {
         URL(string: "https://picsum.photos/seed/\(product.id)/400/400")
@@ -23,19 +24,27 @@ struct ProductCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            AsyncImage(url: imageURL) { phase in
-                if let image = phase.image {
-                    image.resizable().scaledToFill()
-                } else if phase.error != nil {
-                    Color.gray.opacity(0.15)
-                        .overlay(Image(systemName: "photo").foregroundColor(.gray))
-                } else {
-                    Color.gray.opacity(0.1).overlay(ProgressView())
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color(.systemGray6))
+
+                AsyncImage(url: imageURL) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .padding(16)
+                    } else if phase.error != nil {
+                        Image(systemName: "photo")
+                            .font(.system(size: 32))
+                            .foregroundColor(.gray)
+                    } else {
+                        ProgressView()
+                    }
                 }
             }
             .frame(maxWidth: .infinity)
             .frame(height: 160)
-            .clipped()
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.title.capitalized)
@@ -54,7 +63,7 @@ struct ProductCard: View {
         .cornerRadius(8)
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                
+                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
         )
     }
 }

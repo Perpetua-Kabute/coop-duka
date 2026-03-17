@@ -22,38 +22,45 @@ struct HomeView: View {
 
     var body: some View {
         NavigationSplitView {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 0) {
-                    PromoBanner()
-
-                    SearchBar(text: $viewModel.searchText)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 12)
-
-                    Text("Best Selling")
-                        .font(.system(size: 20, weight: .bold))
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 12)
-
-                    if viewModel.isLoading {
-                        ProgressView()
-                            .frame(maxWidth: .infinity)
-                            .padding(.top, 40)
-                    } else {
-                        LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(viewModel.filteredProducts) { product in
-                                NavigationLink(value: product) {
-                                    ProductCard(product: product)
-                                        .onTapGesture {
-                                            viewModel.selectedProduct = product
-                                        }
+            ZStack{
+                // Cart success toast..
+                if viewModel.showCartBanner {
+                    CartSuccessBanner { viewModel.showCartBanner = false }
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .zIndex(1)
+                }
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        PromoBanner()
+                        
+                        SearchBar(text: $viewModel.searchText)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                        
+                        Text("Best Selling")
+                            .font(.system(size: 20, weight: .bold))
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 12)
+                        
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 40)
+                        } else {
+                            LazyVGrid(columns: columns, spacing: 16) {
+                                ForEach(viewModel.filteredProducts) { product in
+                                    NavigationLink(value: product) {
+                                        ProductCard(product: product)
+                                        
+                                    }
+                                    .buttonStyle(.plain)
+                                    .simultaneousGesture(TapGesture().onEnded { selectedProduct = product })
                                 }
-                                .buttonStyle(.plain)
-                                .simultaneousGesture(TapGesture().onEnded { selectedProduct = product })
                             }
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 24)
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 24)
+                        
                     }
                 }
             }

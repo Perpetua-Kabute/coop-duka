@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductDetailView: View {
     let product: Product
 //    let allProducts: [Product]
-    @ObservedObject  var viewModel: ProductsViewModel
+    @ObservedObject var viewModel: ProductsViewModel
 
     @State private var isDescriptionExpanded = false
     @State private var showCartBanner = false
@@ -118,7 +118,7 @@ struct ProductDetailView: View {
             }
             .background(Color("BackgroundColor"))
 
-            // Cart success toast
+            // Cart success toast..//move to home view
             if showCartBanner {
                 CartSuccessBanner { showCartBanner = false }
                     .transition(.move(edge: .top).combined(with: .opacity))
